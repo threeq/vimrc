@@ -6,56 +6,57 @@ call plug#begin('~/.vim/plugged')
 
 " completion/coding
 "  Plug 'Valloric/YouCompleteMe'
-  Plug 'jiangmiao/auto-pairs' "自动括号匹配
-  Plug 'scrooloose/nerdcommenter'
-  Plug 'tpope/vim-surround'
-  Plug 'junegunn/vim-easy-align'
+    Plug 'jiangmiao/auto-pairs' "自动括号匹配
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'tpope/vim-surround'
+    Plug 'junegunn/vim-easy-align'
 " looking
-  Plug 'Yggdroot/indentLine'
-  Plug 'scrooloose/syntastic'
-  Plug 'myusuf3/numbers.vim'
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'morhetz/gruvbox'
-  Plug 'altercation/vim-colors-solarized'
+    Plug 'Yggdroot/indentLine'
+    Plug 'scrooloose/syntastic'
+    Plug 'myusuf3/numbers.vim'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'morhetz/gruvbox'
+    Plug 'altercation/vim-colors-solarized'
 " utils
-  Plug 'asins/vimcdoc'
-  Plug 'Mark--Karkat'
-  Plug 'repeat.vim'
-  Plug 'ccvext.vim'
+    Plug 'asins/vimcdoc'
+    Plug 'Mark--Karkat'
+    Plug 'repeat.vim'
+    Plug 'ccvext.vim'
 " navigation
-  Plug 'scrooloose/nerdtree'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'wesleyche/SrcExpl'
-  Plug 'majutsushi/tagbar'
-  Plug 'taglist.vim'
-  Plug 'rizzatti/dash.vim'
+    Plug 'scrooloose/nerdtree'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'wesleyche/SrcExpl'
+    Plug 'majutsushi/tagbar'
+    Plug 'taglist.vim'
+    Plug 'rizzatti/dash.vim'
 " c/c++
-  Plug 'c.vim'
+    Plug 'c.vim'
 " java
-  Plug 'artur-shaik/vim-javacomplete2'
+    Plug 'artur-shaik/vim-javacomplete2'
 " html/css/javascript
-  Plug 'mattn/emmet-vim'
+    Plug 'mattn/emmet-vim'
 " scala
-  Plug 'ensime/ensime-vim'
-  Plug 'derekwyatt/vim-scala'
+    Plug 'ensime/ensime-vim'
+    Plug 'derekwyatt/vim-scala'
 " go
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 " markdown
-  Plug 'godlygeek/tabular'
-  Plug 'plasticboy/vim-markdown'
+    Plug 'godlygeek/tabular'
+    Plug 'plasticboy/vim-markdown'
+    Plug 'elzr/vim-json'
 "  Plug 'rhysd/nyaovim-markdown-preview'
 
 " snippets
-  Plug 'MarcWeber/vim-addon-mw-utils'
-  Plug 'tomtom/tlib_vim'
-  Plug 'garbas/vim-snipmate'
-  " Optional:
-  "Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'tomtom/tlib_vim'
+    Plug 'garbas/vim-snipmate'
+    " Optional:
+    "Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/.vim/my-plugins'
@@ -184,6 +185,7 @@ nnoremap <leader>jd :YcmCompleter GoTo<CR>
     let g:vim_markdown_no_default_key_mappings=1
     let g:vim_markdown_math=1
     let g:vim_markdown_frontmatter=1
+    let g:vim_markdown_json_frontmatter = 1
     map asdf <Plug>Markdown_MoveToParentHeader
 "}
 "tabular{
