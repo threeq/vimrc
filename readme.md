@@ -18,3 +18,13 @@ git clone https://github.com/threeq/vimrc.git ~/.vim
 ## 依赖
 
 python、go语言
+
+
+# 基本使用
+
+## 剪切板
+
+        vmap <Leader>y :w !pbcopy<CR><CR>
+        nmap <Leader>y :.w !pbcopy<CR><CR>
+        vmap <Leader>p :r !pbpaste<CR><CR>
+        nmap <Leader>p :r !pbpaste<CR><CR>

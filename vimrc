@@ -28,6 +28,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'majutsushi/tagbar'
     Plug 'taglist.vim'
     Plug 'rizzatti/dash.vim'
+" basic editor
+    Plug 'vim-scripts/VisIncr'
+    Plug 'terryma/vim-multiple-cursors'
 " c/c++
     Plug 'c.vim'
 " java
@@ -106,30 +109,40 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set backspace=indent,eol,start
 
 " 快捷键设置（Shortcuts）
-	noremap <silent> <Left> :bp<CR>
-	noremap <silent> <Right> :bn<CR>
+    set hidden
+    let mapleader = ","
+	nnoremap <silent> <Left> :bp<CR>
+	nnoremap <silent> <Right> :bn<CR>
+    nnoremap <Leader>b :bp<CR>
+    nnoremap <Leader>f :bn<CR>
 
-	let mapleader = ","
+    " 查看buffers
+    nnoremap <Leader>l :ls<CR>
 
 	" <space> => fold/unfold current text tips: zR => unfold all; zM => fold all
 	nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 	" use t{h,j,k,l} to switch between different windows
-	noremap tk <c-w>k
-	noremap tj <c-w>j
-	noremap th <c-w>h
-	noremap tl <c-w>l
+	nnoremap <Leader>k <c-w>k
+	nnoremap <Leader>j <c-w>j
+	nnoremap <Leader>h <c-w>h
+	nnoremap <Leader>l <c-w>l
+    nnoremap <Leader>w <c-w>w
 
 	"mac clipboard{
-		set clipboard=unnamed
+	"	set clipboard=unnamed
+        vmap <Leader>y :w !pbcopy<CR><CR>
+        nmap <Leader>y :.w !pbcopy<CR><CR>
+        vmap <Leader>p :r !pbpaste<CR><CR>
+        nmap <Leader>p :r !pbpaste<CR><CR>
 	"}
 
 	"文件和目录{
-		" <F4> => popup the file tree navigation)
+		" <f4> => popup the file tree navigation)
 		nmap <F4> :NERDTreeToggle<CR>
 		autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-		" <F8> => toggle the srcExpl (for source code exploring)
+		" <f8> => toggle the srcExpl (for source code exploring)
 		nmap <F8> :SrcExplToggle<CR>
 		let g:SrcExpl_pluginList = [ 
 				\ "__Tag_List__", 
@@ -148,10 +161,10 @@ set backspace=indent,eol,start
 
 "autocomplete,snippet{
 
-    let g:SuperTabDefaultCompletionType = '<C-x><C-o>'
+    let g:superTabDefaultCompletionType = '<C-x><C-o>'
 
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
- " Disable AutoComplPop.
+"Note: this option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+ " Disable autoComplPop.
  let g:acp_enableAtStartup = 0
  " Use neocomplete.
  let g:neocomplete#enable_at_startup = 1
@@ -179,16 +192,16 @@ set backspace=indent,eol,start
  inoremap <expr><C-l>     neocomplete#complete_common_string()
 
  " Recommended key-mappings.
- " <CR>: close popup and save indent.
+ " <cr>: close popup and save indent.
  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
  function! s:my_cr_function()
    "return neocomplete#close_popup() . "\<CR>"
-   " For no inserting <CR> key.
+   " for no inserting <CR> key.
    return pumvisible() ? neocomplete#close_popup() : "\<CR>"
  endfunction
- " <TAB>: completion.
+ " <tab>: completion.
  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
- " <C-h>, <BS>: close popup and delete backword char.
+ " <c-h>, <bs>: close popup and delete backword char.
  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
  inoremap <expr><C-y>  neocomplete#close_popup()
@@ -206,7 +219,7 @@ set backspace=indent,eol,start
  " Or set this.
  "let g:neocomplete#enable_insert_char_pre = 1
 
- " AutoComplPop like behavior.
+ " Autocomplpop like behavior.
  "let g:neocomplete#enable_auto_select = 1
 
  " Shell like behavior(not recommended).
@@ -216,11 +229,11 @@ set backspace=indent,eol,start
  inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
  " Enable omni completion.
- autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
- autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
- autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
- autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
- autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+ autocmd filetype css setlocal omnifunc=csscomplete#CompleteCSS
+ autocmd filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+ autocmd filetype javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+ autocmd filetype python setlocal omnifunc=pythoncomplete#Complete
+ autocmd filetype xml setlocal omnifunc=xmlcomplete#CompleteTags
 
  " Enable heavy omni completion.
  if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -235,30 +248,30 @@ set backspace=indent,eol,start
  let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns.go = '\h\w*\.\?'
 
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+" Note: it must be "imap" and "smap".  It uses <Plug> mappings.
+imap <c-k>     <Plug>(neosnippet_expand_or_jump)
+smap <c-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <c-k>     <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB>
+" Supertab like snippets behavior.
+" Note: it must be "imap" and "smap".  It uses <Plug> mappings.
+imap <c-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><tAB>
 " \ pumvisible() ? "\<C-n>" :
 " \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" \    "\<plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><taB> neosnippet#expandable_or_jumpable() ?
+\ "\<plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
 
-" Enable snipMate compatibility feature.
+" Enable snipmate compatibility feature.
 let g:neosnippet#enable_snipmate_compatibility = 1
 
-" Tell Neosnippet about the other snippets
+" Tell neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 "}
 
@@ -292,17 +305,17 @@ let g:tagbar_type_go = {
 \ }
 "}
 
-"IdentLine{
+"Identline{
     let g:indentLine_color_term = 239
 "}
-"EasyAlign{
-    xmap ga <Plug>(EasyAlign)
-    nmap ga <Plug>(EasyAlign)
+"Easyalign{
+    xmap ga <plug>(EasyAlign)
+    nmap ga <plug>(EasyAlign)
 "}
 "airline{
 
     set nocompatible
-    set t_Co=256
+    set t_co=256
 
     let g:gitgutter_realtime = 1
     let g:gitgutter_eager = 1
@@ -355,9 +368,14 @@ function s:EnableMarkdown()
     let g:vim_markdown_json_frontmatter = 1
     map asdf <Plug>Markdown_MoveToParentHeader
 endfunction
-autocmd FileType markdown,md call s:EnableMarkdown()
+autocmd filetype markdown,md call s:EnableMarkdown()
 "}
-"
+"git{
+map <silent> <leader>1 :diffget 1<CR> :diffupdate<CR>
+map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
+map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+"}
 "java{
 function s:EnableJava()
 endfunction
