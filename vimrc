@@ -6,7 +6,6 @@ filetype off                  " required
 call plug#begin('~/.vim/plugged')
     " looking
         Plug 'Yggdroot/indentLine'
-        Plug 'scrooloose/syntastic'
         Plug 'myusuf3/numbers.vim'
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
@@ -35,6 +34,9 @@ call plug#begin('~/.vim/plugged')
         Plug 'terryma/vim-multiple-cursors'
         Plug 'terryma/vim-expand-region'
         Plug 'junegunn/vim-easy-align'
+    " 语法检测
+        "Plug 'w0rp/ale'
+        Plug 'scrooloose/syntastic'
     " c/c++
         Plug 'c.vim'
     " java
@@ -61,6 +63,8 @@ call plug#begin('~/.vim/plugged')
         Plug 'Shougo/echodoc.vim'
     " python
         Plug 'vim-scripts/indentpython.vim'
+        Plug 'klen/python-mode'
+        Plug 'davidhalter/jedi-vim', { 'do': 'pip install jedi' }
 call plug#end()
 
 set cmdheight=1
@@ -115,6 +119,16 @@ set cmdheight=1
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
     " 实时搜索
     set incsearch
+    set hlsearch
+
+
+    set autoread "文件在Vim之外修改过，自动重新读入"
+    set autowrite "设置自动保存内容"
+    set autochdir "当前目录随着被编辑文件的改变而改变"
+    "通过9跳转到行末尾,0默认跳转到行首"
+    map 9 $ 
+    "Ctrl-A 选中所有内容"
+    map <silent>  <C-A>  gg v G 
 " }
 
 " 快捷键设置（Shortcuts）{
@@ -163,6 +177,11 @@ set cmdheight=1
     " vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
     "    :<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
     "omap s :normal vs<CR>
+    "============="
+    ""9. 查找和替换文本"
+    "============="
+    nmap ;s :%s/\<<C-R>=expand("<cword>")<CR>\>/
+    nmap ;g :vimgrep <C-R>=expand("<cword>")<CR>
 
     "文件和目录{
         let g:rooter_disable_map = 1
@@ -262,7 +281,7 @@ set cmdheight=1
     autocmd filetype css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd filetype javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd filetype python setlocal omnifunc=pythoncomplete#Complete
+    autocmd filetype python setlocal omnifunc=pythoncomplete#Complete " jedi#completions
     autocmd filetype xml setlocal omnifunc=xmlcomplete#CompleteTags
 
     " Enable heavy omni completion.
@@ -368,6 +387,14 @@ set cmdheight=1
     let g:airline#extensions#tabline#buffer_idx_mode = 1
 "}
 
+"w0rp/ale {
+"    let &runtimepath.=',~/.vim/plugged/ale'
+"    let g:ale_sign_column_always = 1
+"    let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+"    let g:ale_sign_error = '>>'
+"    let g:ale_sign_warning = '--'
+" }
+
 "syntastic{
     set statusline+=%#warningmsg#
     set statusline+=%{SyntasticStatuslineFlag()}
@@ -397,6 +424,11 @@ set cmdheight=1
     map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
     map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
     map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+"}
+"python{
+    "let g:pymode_python = 'python3'
+    "let g:pymode_virtualenv = 1
+    "let g:pymode_virtualenv_path = /User/there/.virtualenvs/flask
 "}
 "java{
     function s:EnableJava()
