@@ -29,8 +29,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'taglist.vim'
     Plug 'rizzatti/dash.vim'
 " basic editor
+    Plug 'kshenoy/vim-signature' " 书签显示
     Plug 'vim-scripts/VisIncr'
     Plug 'terryma/vim-multiple-cursors'
+    Plug 'terryma/vim-expand-region'
 " c/c++
     Plug 'c.vim'
 " java
@@ -84,7 +86,7 @@ set autoindent "自动缩进
 set smartindent "只能缩进
 
 set foldenable
-set foldmethod=indent "folding by indent
+set foldmethod=indent "代码折叠
 set ignorecase        "ignore the case when search texts
 set smartcase         "if searching text contains uppercase case will not be ignored
 
@@ -96,7 +98,6 @@ set backupdir=/tmp "设置备份文件目录
 set directory=/tmp "设置临时文件目录
 set hls "检索时高亮显示匹配项
 set helplang=cn "帮助系统设置为中文
-set foldmethod=syntax "代码折叠
 set nowrap "关闭自动折行
 set synmaxcol=256
 " 配色
@@ -110,17 +111,39 @@ set backspace=indent,eol,start
 
 " 快捷键设置（Shortcuts）
     set hidden
-    let mapleader = ","
+    let mapleader = "\<Space>"
+    nnoremap <Leader>o :CtrlP<CR>
+    nnoremap <Leader>w :w<CR>
+    nmap <Leader><Leader> i
+
+    vmap <Leader>y "+y
+    vmap <Leader>d "+d
+    nmap <Leader>p "+p
+    nmap <Leader>P "+P
+    vmap <Leader>p "+p
+    vmap <Leader>P "+P
+	"mac clipboard{
+	"	set clipboard=unnamed
+        vmap <Leader>y :w !pbcopy<CR><CR>
+        nmap <Leader>y :.w !pbcopy<CR><CR>
+        vmap <Leader>p :r !pbpaste<CR><CR>
+        nmap <Leader>p :r !pbpaste<CR><CR>
+	"}
+
 	nnoremap <silent> <Left> :bp<CR>
 	nnoremap <silent> <Right> :bn<CR>
-    nnoremap <Leader>b :bp<CR>
-    nnoremap <Leader>f :bn<CR>
+    nnoremap <Leader>f :bp<CR>
+    nnoremap <Leader>b :bn<CR>
 
     " 查看buffers
     nnoremap <Leader>l :ls<CR>
 
+    " 区域扩展
+    vmap v <Plug>(expand_region_expand)
+    vmap <C-v> <Plug>(expand_region_shrink)
+
 	" <space> => fold/unfold current text tips: zR => unfold all; zM => fold all
-	nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+	nnoremap <Leader>z @=('za')<CR>
 
 	" use t{h,j,k,l} to switch between different windows
 	nnoremap <Leader>k <c-w>k
@@ -129,13 +152,9 @@ set backspace=indent,eol,start
 	nnoremap <Leader>l <c-w>l
     nnoremap <Leader>w <c-w>w
 
-	"mac clipboard{
-	"	set clipboard=unnamed
-        vmap <Leader>y :w !pbcopy<CR><CR>
-        nmap <Leader>y :.w !pbcopy<CR><CR>
-        vmap <Leader>p :r !pbpaste<CR><CR>
-        nmap <Leader>p :r !pbpaste<CR><CR>
-	"}
+    " vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+    "    :<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+    "omap s :normal vs<CR>
 
 	"文件和目录{
 		" <f4> => popup the file tree navigation)
@@ -156,8 +175,9 @@ set backspace=indent,eol,start
 	"}
 "}
 
-
 " 插件配置
+
+" 书签插件
 
 "autocomplete,snippet{
 
@@ -361,46 +381,46 @@ let g:tagbar_type_go = {
 "}
 
 "markdown{
-function s:EnableMarkdown()
-    let g:vim_markdown_no_default_key_mappings=1
-    let g:vim_markdown_math=1
-    let g:vim_markdown_frontmatter=1
-    let g:vim_markdown_json_frontmatter = 1
-    map asdf <Plug>Markdown_MoveToParentHeader
-endfunction
-autocmd filetype markdown,md call s:EnableMarkdown()
+    function s:EnableMarkdown()
+        let g:vim_markdown_no_default_key_mappings=1
+        let g:vim_markdown_math=1
+        let g:vim_markdown_frontmatter=1
+        let g:vim_markdown_json_frontmatter = 1
+        map asdf <Plug>Markdown_MoveToParentHeader
+    endfunction
+    autocmd filetype markdown,md call s:EnableMarkdown()
 "}
 "git{
-map <silent> <leader>1 :diffget 1<CR> :diffupdate<CR>
-map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
-map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
-map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+    map <silent> <leader>1 :diffget 1<CR> :diffupdate<CR>
+    map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+    map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
+    map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 "}
 "java{
-function s:EnableJava()
-endfunction
+    function s:EnableJava()
+    endfunction
     autocmd Filetype java,jsp set omnifunc=javacomplete#Complete
     autocmd Filetype java,jsp set completefunc=javacomplete#CompleteParamsInf
     autocmd Filetype java,jsp inoremap &lt;buffer> . .&lt;C-X>&lt;C-O>&lt;C-P>&lt;DOWN>
-autocmd FileType java call s:EnableJava()
+    autocmd FileType java call s:EnableJava()
 "}
 "go{
-function s:EnableGo()
+    function s:EnableGo()
 
-	let g:go_snippet_engine = "neosnippet"
-	" Disable the neosnippet preview candidate window
-	" When enabled, there can be too much visual noise
-    "  especially when splits are used.
-    set completeopt-=preview
-	let g:go_fmt_command = "goimports"
-	let g:go_highlight_functions = 1  
-	let g:go_highlight_methods = 1  
-	let g:go_highlight_structs = 1
-	let g:go_highlight_operators = 1
-	let g:go_highlight_build_constraints = 1
-endfunction
-autocmd FileType go set omnifunc=go#complete#Complete
-autocmd FileType go set completefunc=go#complete#Complete
-autocmd Filetype go inoremap &lt;buffer> . .&lt;C-X>&lt;C-O>&lt;C-P>&lt;DOWN>
-autocmd FileType go call s:EnableGo()
+    	let g:go_snippet_engine = "neosnippet"
+    	" disable the neosnippet preview candidate window
+    	" when enabled, there can be too much visual noise
+        "  especially when splits are used.
+        set completeopt-=preview
+    	let g:go_fmt_command = "goimports"
+    	let g:go_highlight_functions = 1  
+    	let g:go_highlight_methods = 1  
+    	let g:go_highlight_structs = 1
+    	let g:go_highlight_operators = 1
+    	let g:go_highlight_build_constraints = 1
+    endfunction
+    autocmd filetype go set omnifunc=go#complete#complete
+    autocmd filetype go set completefunc=go#complete#complete
+    autocmd filetype go inoremap &lt;buffer> . .&lt;c-x>&lt;c-o>&lt;c-p>&lt;down>
+    autocmd filetype go call s:enablego()
 "}
