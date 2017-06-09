@@ -10,6 +10,8 @@ call plug#begin('~/.vim/plugged')
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
         Plug 'airblade/vim-gitgutter'
+        Plug 'tpope/vim-fugitive'
+        Plug 'mhinz/vim-signify'
         Plug 'morhetz/gruvbox'
         Plug 'altercation/vim-colors-solarized'
     " utils
@@ -116,15 +118,17 @@ set cmdheight=1
     
     set backspace=indent,eol,start
     " 让配置变更立即生效
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    " autocmd BufWritePost $MYVIMRC source $MYVIMRC
     " 实时搜索
     set incsearch
     set hlsearch
 
 
-    set autoread "文件在Vim之外修改过，自动重新读入"
-    set autowrite "设置自动保存内容"
-    set autochdir "当前目录随着被编辑文件的改变而改变"
+    "set autoread "文件在Vim之外修改过，自动重新读入"
+    "set autowrite "设置自动保存内容"
+    let autosave=5
+    "set autochdir 
+    ""当前目录随着被编辑文件的改变而改变"
     "通过9跳转到行末尾,0默认跳转到行首"
     map 9 $ 
     "Ctrl-A 选中所有内容"
@@ -368,7 +372,11 @@ set cmdheight=1
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
     endif
+    let g:airline_powerline_fonts = 1
+    let g:airline_skip_empty_sections = 1
     let g:airline#extensions#branch#enabled=1
+    let g:airline#extensions#tmuxline#enabled = 1
+    let g:Powerline_sybols = 'unicode'
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#left_sep = ' '
     let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -426,9 +434,37 @@ set cmdheight=1
     map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 "}
 "python{
-    "let g:pymode_python = 'python3'
-    "let g:pymode_virtualenv = 1
-    "let g:pymode_virtualenv_path = /User/there/.virtualenvs/flask
+    let g:pymode_rope = 0
+    let g:pymode_rope_lookup_project = 0
+    " Documentation
+    let g:pymode_doc = 1
+    let g:pymode_doc_key = 'K'
+    
+    " Linting
+    let g:pymode_lint = 1
+    let g:pymode_lint_checker = "pyflakes,pep8"
+    
+    " Auto check on save
+    let g:pymode_lint_write = 1
+    
+    " Support virtualenv
+    let g:pymode_virtualenv = 1
+    
+    " Enable breakpoints plugin
+    let g:pymode_breakpoint = 1
+    let g:pymode_breakpoint_bind = '<leader>b'
+    
+    " syntax highlighting
+    let g:pymode_syntax = 1
+    let g:pymode_syntax_all = 1
+    let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+    let g:pymode_syntax_space_errors = g:pymode_syntax_all
+    
+    " Don't autofold code
+    let g:pymode_folding = 0"
+    
+    
+    "let g:pymode_python = 'python'
 "}
 "java{
     function s:EnableJava()
