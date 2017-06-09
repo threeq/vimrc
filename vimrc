@@ -52,18 +52,14 @@ call plug#begin('~/.vim/plugged')
         Plug 'godlygeek/tabular'
         Plug 'plasticboy/vim-markdown'
         Plug 'elzr/vim-json'
-    " completion/coding
+    " completion/snippets
         Plug 'ervandew/supertab'
         Plug 'jiangmiao/auto-pairs' "自动括号匹配
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-surround'
         Plug 'Valloric/YouCompleteMe', {'do': '~/.vim/plugged/YouCompleteMe/install.py --clang-completer --gocode-completer --tern-completer'}
-        "Plug 'Shougo/neocomplete'
-        "Plug 'Shougo/neosnippet'
-        "Plug 'Shougo/neosnippet-snippets'
-    " snippets
+        Plug 'SirVer/ultisnips'
         Plug 'honza/vim-snippets'
-        Plug 'Shougo/echodoc.vim'
     " python
         Plug 'vim-scripts/indentpython.vim'
         Plug 'klen/python-mode'
@@ -254,6 +250,11 @@ set cmdheight=1
     inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
     inoremap <expr> <PageDown> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
     inoremap <expr> <PageUp>   pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
+
+    let g:UltiSnipsExpandTrigger = "<c-k>"
+    let g:UltiSnipsJumpForwardTrigger = "<tab>"
+    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
     " 比较喜欢用tab来选择补全...
     function! MyTabFunction ()
         let line = getline('.')
@@ -262,9 +263,10 @@ set cmdheight=1
         if strlen(substr) == 0
             return "\<tab>"
         endif
-        return pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
+        return pumvisible() ? "\<c-n>" : "\<tab>"
     endfunction
-    inoremap <expr><tab> <c-r>=MyTabFunction()<cr>
+    inoremap <tab> <c-r>=MyTabFunction()<cr>
+
 "}
 
 "tagbar{
