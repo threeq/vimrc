@@ -214,7 +214,9 @@ set cmdheight=1
 " }
 
 "autocomplete,snippet {
-    let g:superTabDefaultCompletionType = '<C-x><C-o>'
+    let g:SuperTabContextDefaultCompletionType = '<c-n>'
+    let g:SuperTabDefaultCompletionType = '<C-n>'
+"    let g:superTabDefaultCompletionType = '<C-x><C-o>'
     
     "Note: this option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
     " Disable autoComplPop.
@@ -380,19 +382,25 @@ set cmdheight=1
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#left_sep = ' '
     let g:airline#extensions#tabline#left_alt_sep = '|'
-    let g:airline_left_sep = '»'
+    " unicode symbols
     let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
     let g:airline_right_sep = '◀'
-    let g:airline_symbols.linenr = '␊'
-    let g:airline_symbols.linenr = '␤'
+    let g:airline_symbols.crypt = '🔒'
     let g:airline_symbols.linenr = '¶'
     let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.paste = 'Þ'
     let g:airline_symbols.paste = '∥'
+    let g:airline_symbols.notexists = '∄'
     let g:airline_symbols.whitespace = 'Ξ'
+
+    let g:airline#extensions#tabline#show_tab_nr = 1
+    let g:airline#extensions#tabline#tab_nr_type= 2
+    let g:airline#extensions#tabline#show_tab_type = 1
+    let g:airline#extensions#tabline#buffers_label = 'BUFFERS'
+    let g:airline#extensions#tabline#tabs_label = 'TABS'
     let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#fnamemod = ':t'
+    let g:airline#extensions#tabline#fnamecollapse = 1
+    let g:airline#extensions#tabline#fnametruncate = 0
 "}
 
 "w0rp/ale {
