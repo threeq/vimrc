@@ -58,9 +58,9 @@ call plug#begin('~/.vim/plugged')
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-surround'
         Plug 'Valloric/YouCompleteMe', {'do': '~/.vim/plugged/YouCompleteMe/install.py --clang-completer --gocode-completer --tern-completer'}
-        Plug 'Shougo/neocomplete'
-        Plug 'Shougo/neosnippet'
-        Plug 'Shougo/neosnippet-snippets'
+        "Plug 'Shougo/neocomplete'
+        "Plug 'Shougo/neosnippet'
+        "Plug 'Shougo/neosnippet-snippets'
     " snippets
         Plug 'honza/vim-snippets'
         Plug 'Shougo/echodoc.vim'
@@ -222,113 +222,49 @@ set cmdheight=1
     "Note: this option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
     " Disable autoComplPop.
     let g:acp_enableAtStartup = 0
-    " Use neocomplete.
-    let g:neocomplete#enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplete#enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
-
-    " Define keyword.
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-    " Plugin key-mappings.
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-    " Recommended key-mappings.
-    " <cr>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-      "return neocomplete#close_popup() . "\<CR>"
-      " for no inserting <CR> key.
-      return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-    endfunction
-    " <tab>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <c-h>, <bs>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y>  neocomplete#close_popup()
-    inoremap <expr><C-e>  neocomplete#cancel_popup()
-    " Close popup by <Space>.
-    "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-    " For cursor moving in insert mode(Not recommended)
-    "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-    "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-    "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-    "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-    " Or set this.
-    "let g:neocomplete#enable_cursor_hold_i = 1
-    " Or set this.
-    "let g:neocomplete#enable_insert_char_pre = 1
-
-    " Autocomplpop like behavior.
-    "let g:neocomplete#enable_auto_select = 1
-
-    " Shell like behavior(not recommended).
-    "set completeopt+=longest
-    "let g:neocomplete#enable_auto_select = 1
-    "let g:neocomplete#disable_auto_complete = 1
-    inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
     " Enable omni completion.
-    autocmd filetype css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd filetype javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd filetype python setlocal omnifunc=pythoncomplete#Complete " jedi#completions
-    autocmd filetype xml setlocal omnifunc=xmlcomplete#CompleteTags
+    "autocmd filetype css setlocal omnifunc=csscomplete#CompleteCSS
+    "autocmd filetype html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    "autocmd filetype javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    "autocmd filetype python setlocal omnifunc=pythoncomplete#Complete " jedi#completions
+    "autocmd filetype xml setlocal omnifunc=xmlcomplete#CompleteTags
+    "autocmd filetype go setlocal omnifunc=
 
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-    let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+    let g:ycm_use_ultisnips_completer = 1
+    let g:ycm_autoclose_preview_window_after_completion=1
+    let g:ycm_complete_in_comments = 1
+    let g:ycm_collect_identifiers_from_comments_and_strings = 0
+    let g:ycm_cache_omnifunc = 0
+    let g:ycm_complete_in_strings = 1
+    let g:ycm_add_preview_to_completeopt = 1
+    let g:ycm_disable_for_files_larger_than_kb = 50000
+    let g:ycm_seed_identifiers_with_syntax=1
+    let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+    let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
 
-    " For perlomni.vim setting.
-    " https://github.com/c9s/perlomni.vim
-    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-    let g:neocomplete#sources#omni#input_patterns.go = '\h\w*\.\?'
-     
-    " Note: it must be "imap" and "smap".  It uses <Plug> mappings.
-    imap <c-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <c-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <c-k>     <Plug>(neosnippet_expand_target)
-    
-    " Supertab like snippets behavior.
-    " Note: it must be "imap" and "smap".  It uses <Plug> mappings.
-    imap <c-k>     <Plug>(neosnippet_expand_or_jump)
-    "imap <expr><tAB>
-    " \ pumvisible() ? "\<C-n>" :
-    " \ neosnippet#expandable_or_jumpable() ?
-    " \    "\<plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    smap <expr><taB> neosnippet#expandable_or_jumpable() ?
-    \ "\<plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    
-    " For conceal markers.
-    if has('conceal')
-      set conceallevel=2 concealcursor=niv
-    endif
-    
-    " Enable snipmate compatibility feature.
-    let g:neosnippet#enable_snipmate_compatibility = 1
-    
-    " Tell neosnippet about the other snippets
-    let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
+    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+    nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+    nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+    nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+    inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
+    inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
+    inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
+    inoremap <expr> <PageDown> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
+    inoremap <expr> <PageUp>   pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
+    " 比较喜欢用tab来选择补全...
+    function! MyTabFunction ()
+        let line = getline('.')
+        let substr = strpart(line, -1, col('.')+1)
+        let substr = matchstr(substr, "[^ \t]*$")
+        if strlen(substr) == 0
+            return "\<tab>"
+        endif
+        return pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
+    endfunction
+    inoremap <expr><tab> <c-r>=MyTabFunction()<cr>
 "}
 
 "tagbar{
@@ -443,6 +379,8 @@ set cmdheight=1
     map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 "}
 "python{
+    "autopep8设置"
+    let g:autopep8_disable_show_diff=1
     let g:pymode_rope = 0
     let g:pymode_rope_lookup_project = 0
     " Documentation
@@ -470,22 +408,24 @@ set cmdheight=1
     let g:pymode_syntax_space_errors = g:pymode_syntax_all
     
     " Don't autofold code
-    let g:pymode_folding = 0"
+    let g:pymode_folding = 0
     
     
     "let g:pymode_python = 'python'
 "}
 "java{
     function s:EnableJava()
+        nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+        imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
     endfunction
     autocmd Filetype java,jsp set omnifunc=javacomplete#Complete
-    autocmd Filetype java,jsp set completefunc=javacomplete#CompleteParamsInf
-    autocmd Filetype java,jsp inoremap &lt;buffer> . .&lt;C-X>&lt;C-O>&lt;C-P>&lt;DOWN>
+    "autocmd Filetype java,jsp set completefunc=javacomplete#CompleteParamsInf
+    "autocmd Filetype java,jsp inoremap &lt;buffer> . .&lt;C-X>&lt;C-O>&lt;C-P>&lt;DOWN>
     autocmd FileType java call s:EnableJava()
 "}
 "go{
     function s:EnableGo()
-        let g:go_snippet_engine = "neosnippet"
+        "let g:go_snippet_engine = "neosnippet"
         " disable the neosnippet preview candidate window
         " when enabled, there can be too much visual noise
         "  especially when splits are used.
@@ -497,8 +437,8 @@ set cmdheight=1
         let g:go_highlight_operators = 1
         let g:go_highlight_build_constraints = 1
     endfunction
-    autocmd filetype go set omnifunc=go#complete#complete
-    autocmd filetype go set completefunc=go#complete#complete
-    autocmd filetype go inoremap &lt;buffer> . .&lt;c-x>&lt;c-o>&lt;c-p>&lt;down>
-    autocmd filetype go call s:enablego()
+    "autocmd filetype go set omnifunc=go#complete#complete
+    "autocmd filetype go set completefunc=go#complete#complete
+    "autocmd filetype go inoremap &lt;buffer> . .&lt;c-x>&lt;c-o>&lt;c-p>&lt;down>
+    autocmd filetype go call s:EnableGo()
 "}
