@@ -57,11 +57,12 @@ call plug#begin('~/.vim/plugged')
         Plug 'jiangmiao/auto-pairs' "自动括号匹配
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-surround'
-    " snippets
-        Plug 'honza/vim-snippets'
+        Plug 'Valloric/YouCompleteMe', {'do': '~/.vim/plugged/YouCompleteMe/install.py --clang-completer --gocode-completer --tern-completer'}
         Plug 'Shougo/neocomplete'
         Plug 'Shougo/neosnippet'
         Plug 'Shougo/neosnippet-snippets'
+    " snippets
+        Plug 'honza/vim-snippets'
         Plug 'Shougo/echodoc.vim'
     " python
         Plug 'vim-scripts/indentpython.vim'
