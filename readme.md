@@ -15,10 +15,17 @@ git clone https://github.com/threeq/vimrc.git ~/.vim
 ./init.sh
 ```
 
+3. 进入 vim 中安装插件（第一次使用）
+
+```
+:PlugInstall
+```
+
+> 加入新插件需要只需要执行第 3 步
+
 ## 依赖
 
-python、go语言
-
+node、npm、python、go语言
 
 # 基本使用
 

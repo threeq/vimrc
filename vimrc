@@ -64,6 +64,9 @@ call plug#begin('~/.vim/plugged')
         Plug 'vim-scripts/indentpython.vim'
         Plug 'klen/python-mode'
         Plug 'davidhalter/jedi-vim', { 'do': 'pip install jedi' }
+    " plantuml
+        Plug 'scrooloose/vim-slumlord'
+        Plug 'aklt/plantuml-syntax'
 call plug#end()
 
 set cmdheight=1
