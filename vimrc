@@ -65,7 +65,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'klen/python-mode'
         Plug 'davidhalter/jedi-vim', { 'do': 'pip install jedi' }
     " plantuml
-        Plug 'scrooloose/vim-slumlord'
+    "    Plug 'scrooloose/vim-slumlord'
         Plug 'aklt/plantuml-syntax'
 call plug#end()
 
