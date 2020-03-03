@@ -1,4 +1,3 @@
-
 set nocompatible              " required
 filetype off                  " required
 
@@ -57,7 +56,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'jiangmiao/auto-pairs' "自动括号匹配
         Plug 'scrooloose/nerdcommenter'
         Plug 'tpope/vim-surround'
-        Plug 'Valloric/YouCompleteMe', {'do': '~/.vim/plugged/YouCompleteMe/install.py --clang-completer --gocode-completer --tern-completer'}
+    "    Plug 'Valloric/YouCompleteMe', {'do': '~/.vim/plugged/YouCompleteMe/install.py --clang-completer --gocode-completer --tern-completer'}
         Plug 'SirVer/ultisnips'
         Plug 'honza/vim-snippets'
     " python
@@ -249,8 +248,8 @@ set cmdheight=1
     nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
     inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
-    inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
-    inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
+    "inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
+    "inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
     inoremap <expr> <PageDown> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
     inoremap <expr> <PageUp>   pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
 
